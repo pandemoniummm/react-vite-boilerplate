@@ -8,7 +8,7 @@
   // 네스팅 규칙
   "explorer.fileNesting.patterns": {
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .npmrc, .gitignore",
-    "vite.config.ts": "vite.config.ts.timestamp-*, .env*",
+    "vite.config.ts": "vite.config.ts.timestamp-*",
     "eslint.config.js": ".prettierrc, eslint.config.*, prettier.config.*",
     "tsconfig.json": "tsconfig.*.json, tsconfig.node.json",
     ".env": ".env.*",
