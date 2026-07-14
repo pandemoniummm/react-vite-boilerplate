@@ -29,5 +29,11 @@
   },
 
   // 기본 포맷터로 Prettier 사용 명시
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // json5 파일을 jsonc로 읽도록 설정(renovate)
+  "files.associations": {
+    "*.json5": "jsonc",
+    "renovate.json*": "jsonc"
+  }
 }
