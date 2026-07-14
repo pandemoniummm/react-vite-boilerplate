@@ -20,8 +20,8 @@
 
   // 네스팅 규칙
   "explorer.fileNesting.patterns": {
-    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .npmrc, .gitignore",
-    "vite.config.ts": "vite.config.ts.timestamp-*",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .npmrc, .gitignore, renovate.json5",
+    "vite.config.ts": "vite.config.ts.timestamp-*, index.html",
     "eslint.config.js": ".prettierrc, eslint.config.*, prettier.config.*",
     "tsconfig.json": "tsconfig.*.json, tsconfig.node.json",
     ".env": ".env.*",
@@ -29,5 +29,18 @@
   },
 
   // 기본 포맷터로 Prettier 사용 명시
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // json5 파일을 jsonc로 읽도록 설정(renovate)
+  "files.associations": {
+    "*.json5": "jsonc",
+    "renovate.json*": "jsonc"
+  },
+  // renovate.json5의 자동완성을 도와주는 공식 스키마 문서
+  "json.schemas": [
+    {
+      "fileMatch": ["renovate.json5"],
+      "url": "https://docs.renovatebot.com/renovate-schema.json"
+    }
+  ]
 }
