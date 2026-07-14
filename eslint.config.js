@@ -1,7 +1,6 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import reactX from 'eslint-plugin-react-x';
 import reactDom from 'eslint-plugin-react-dom';
 import tseslint from 'typescript-eslint';
@@ -31,18 +30,11 @@ export default tseslint.config(
     // 사용할 외부 플러그인 등록
     plugins: {
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
     },
 
     // 세부 규칙 커스텀
     rules: {
       ...reactHooks.configs.recommended.rules,
-
-      // React 컴포넌트만 export 하도록 강제 (Fast Refresh 지원 목적)
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
     },
   },
 
