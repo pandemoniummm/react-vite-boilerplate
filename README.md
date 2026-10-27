@@ -60,7 +60,7 @@ import { Button, Modal } from '@/components';
 ### ◼︎ 인프라 자동화
 
 - **CI 파이프라인**: GitHub Actions를 통해 PR 생성 시 Lint 및 Build 테스트를 자동화하여 코드 품질을 유지합니다.
-- **의존성 관리**: Renovate 봇이 매주 패키지 업데이트를 감지하여 PR을 생성합니다. minor·patch 업데이트는 CI 통과 시 자동 merge되며, major 업데이트만 직접 확인합니다.
+- **의존성 관리**: Renovate 봇이 매주 패키지 업데이트를 감지하여 PR을 생성합니다. minor·patch 업데이트는 CI 통과 시 자동 merge되며, major 업데이트만 직접 확인합니다. (실제 프로젝트 적용 시 아래 "실제 프로젝트 적용 시 확인 사항" 참고)
 - **CD 파이프라인 (의도적 배제)**: 특정 호스팅 플랫폼에 종속되지 않습니다. Vercel 등 모던 PaaS의 자체 배포(Auto Deployment) 시스템을 그대로 활용하거나, AWS 등 프로젝트 환경에 맞춰 자유롭게 파이프라인을 구성할 수 있습니다.
 
 ## 📁︎ 폴더 구조 (Project Structure)
@@ -85,6 +85,8 @@ src/
 
 1. **프로젝트 스캐폴딩**
 
+GitHub 저장소 상단의 **Use this template** 버튼으로 새 저장소를 만들거나, `degit`으로 복사합니다. (두 방법 모두 커밋 기록 없이 시작)
+
 ```bash
 npx degit https://github.com/pandemoniummm/react-vite-boilerplate.git [YOUR_PROJECT_NAME]
 cd [YOUR_PROJECT_NAME]
@@ -104,6 +106,12 @@ npm run dev
 
 > 개발용 환경 변수 기본값은 `.env.development`에 포함되어 있어 별도 설정 없이 동작합니다.
 > 개인 로컬 환경에서만 사용할 값은 `.env.development.local`에 작성하세요. (git 추적 제외)
+
+## ✔︎ 실제 프로젝트 적용 시 확인 사항
+
+- **Renovate 자동 merge**: 이 레포는 보일러플레이트 특성상 minor·patch 업데이트를 자동 merge합니다. 실제 프로젝트에서는 테스트가 갖춰지기 전까지 `renovate.json5`의 `automerge`를 `false`로 변경하세요.
+- **로딩/에러 UI**: `LoadingFallback`, `ErrorFallback`을 디자인에 맞춰 교체하세요. `ErrorFallback`은 배포 환경에서도 에러 메시지를 그대로 노출하므로, 필요 시 주석으로 제공된 개발 환경 전용 코드로 교체하세요.
+- **환경 변수**: `.env.development`의 `VITE_API_BASE_URL`을 프로젝트 API 주소로 변경하세요.
 
 ---
 

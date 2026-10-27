@@ -59,7 +59,7 @@ Applied VSCode's file nesting via `.vscode/settings.json` to logically group con
 ### ◼︎ Automated Infrastructure
 
 - **CI Pipeline**: Automates Lint and Build tests via GitHub Actions upon PR creation to maintain code quality.
-- **Dependency Management**: Renovate bot detects package updates weekly and opens PRs. Minor and patch updates are auto-merged once CI passes; only major updates require manual review.
+- **Dependency Management**: Renovate bot detects package updates weekly and opens PRs. Minor and patch updates are auto-merged once CI passes; only major updates require manual review. (See "Checklist for Real Projects" below when reusing this template)
 - **CD Pipeline (Intentionally Omitted)**: Not tied to any specific hosting platform. You can natively leverage the Auto Deployment systems of modern PaaS like Vercel, or freely configure a custom pipeline tailored to your project environment, such as AWS.
 
 ## 📁︎ Project Structure
@@ -84,6 +84,8 @@ src/
 
 1. **Scaffold project**
 
+Create a new repository with the **Use this template** button at the top of the GitHub repository, or copy it with `degit`. (Both start without commit history)
+
 ```bash
 npx degit https://github.com/pandemoniummm/react-vite-boilerplate.git [YOUR_PROJECT_NAME]
 cd [YOUR_PROJECT_NAME]
@@ -103,6 +105,12 @@ npm run dev
 
 > Default development env variables are included in `.env.development`, so no extra setup is required.
 > Put values for your local environment only in `.env.development.local`. (ignored by git)
+
+## ✔︎ Checklist for Real Projects
+
+- **Renovate auto-merge**: As a boilerplate, this repo auto-merges minor and patch updates. In a real project, set `automerge` to `false` in `renovate.json5` until tests are in place.
+- **Loading/Error UI**: Replace `LoadingFallback` and `ErrorFallback` to match your design. `ErrorFallback` shows the raw error message in production as well, so switch to the development-only line provided in the comments if needed.
+- **Environment variables**: Change `VITE_API_BASE_URL` in `.env.development` to your project's API URL.
 
 ---
 
