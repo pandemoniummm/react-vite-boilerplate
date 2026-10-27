@@ -5,8 +5,8 @@ export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <div>
       <h2>Something went wrong.</h2>
-      {/* error가 표준 Error 객체임을 TS에 명시 (타입 단언) */}
-      <p>{(error as Error).message}</p>
+      {/* error는 unknown 타입 (Error 외의 값도 throw 가능) -> Error 객체인지 확인 후 메시지 표시 */}
+      <p>{error instanceof Error ? error.message : String(error)}</p>
 
       {/* 기능적 가이드: 에러 초기화 및 재요청을 위해 resetErrorBoundary 함수를 버튼 클릭 이벤트에 반드시 바인딩해야 합니다. */}
       <button onClick={resetErrorBoundary}>Try again</button>
