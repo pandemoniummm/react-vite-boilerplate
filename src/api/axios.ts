@@ -5,9 +5,7 @@ export const api = axios.create({
   // .env 파일에서 백엔드 주소 가져오기
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000, // 5초 이상 응답 없으면 에러 처리
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Content-Type은 지정하지 않음: axios가 데이터 형식에 맞춰 자동 설정 (객체 -> JSON, FormData -> multipart)
 });
 
 // 2. 요청 인터셉터 (출발 전 검문소: 토큰 자동 주입용 뼈대)
