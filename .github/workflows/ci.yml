@@ -19,7 +19,7 @@ jobs:
       - name: 2. Node.js env. settings
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-            node-version: "22" # latest LTS version
+            node-version: "24" # latest LTS version
             cache: "npm" # increases package install speed
 
       - name: 3. package install
