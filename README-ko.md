@@ -72,7 +72,6 @@ src/
 ├── pages/          # 페이지 컴포넌트
 ├── router/         # 라우터 설정
 ├── store/          # Zustand 전역 상태 스토어
-├── styles/         # 전역 CSS & Tailwind 설정
 ├── types/          # TypeScript 타입 정의
 └── utils/          # 유틸리티 함수
 ```

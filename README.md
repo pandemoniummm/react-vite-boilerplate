@@ -71,7 +71,6 @@ src/
 ├── pages/          # Page-level components
 ├── router/         # Router configuration
 ├── store/          # Zustand global state store
-├── styles/         # Global CSS & Tailwind configuration
 ├── types/          # TypeScript type definitions
 └── utils/          # Utility functions
 ```
