@@ -4,33 +4,24 @@
   "timezone": "Asia/Seoul", // 봇의 기준 시간대를 한국으로 설정
   "schedule": ["before 9am on monday"], // 매주 월요일 9시 전에만 묶어서 배달
   "labels": ["dependencies"], // 봇 생성 PR의 자동 생성 라벨
+  "lockFileMaintenance": { "automerge": true }, // 주간 lockfile 갱신(best-practices 포함)도 CI 통과 시 봇 자동 merge
 
   "packageRules": [
     {
-      // patch & 버전 고정(pin, digest) 업데이트는 위험도가 낮음 -> CI 통과 시 봇 자동 merge
-      "matchUpdateTypes": ["patch", "pin", "digest"],
-      "automerge": true
-    },
-    {
-      // 개발 도구(devDependencies) minor 업데이트는 빌드 결과물 영향 X -> 봇 자동 merge
-      // 단, 번들 결과물을 만드는 vite 관련 패키지는 직접 확인
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor"],
-      "matchPackageNames": ["!vite", "!@vitejs/**"],
+      // 보일러플레이트 특성상 런타임 로직이 거의 없어 lint & build 통과로 충분히 검증됨
+      // minor, patch & 버전 고정(pin, digest) 업데이트는 CI 통과 시 봇 자동 merge (major는 직접 확인)
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
     },
     {
       // TypeScript Package Rules
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": ["@types/**"],
-      "groupName": "definitelyTyped (types)",
-      // TS package 업데이트는 서비스 로직 영향 X -> 봇 자동 merge
-      "automerge": true
+      "groupName": "definitelyTyped (types)"
     },
     {
       // 프론트엔드 핵심 인프라 rule
       // React, ESLint, Prettier, Tailwind 관련 작은 업데이트는 PR 1개로 묶음
-      // (그룹 내 모든 업데이트가 자동 merge 대상일 때만 자동 merge, 런타임 패키지 minor 포함 시 직접 확인)
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": [
         "react",
