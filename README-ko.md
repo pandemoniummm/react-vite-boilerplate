@@ -10,21 +10,21 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 [![CI Pipeline](https://img.shields.io/github/actions/workflow/status/pandemoniummm/react-vite-boilerplate/ci.yml?style=for-the-badge&label=CI%20Pipeline)](https://github.com/pandemoniummm/react-vite-boilerplate/actions)
 
-Vite와 React 18 기반의 프론트엔드 보일러플레이트입니다.
+Vite와 React 19 기반의 프론트엔드 보일러플레이트입니다.
 상태 관리, 네트워크 통신, 라우팅 및 CI 파이프라인 등 프론트엔드 개발에 필요한 핵심 인프라가 사전 구성되어 있으며,
 정적 호스팅 환경에 안정적으로 배포할 수 있도록 최적화되어 있습니다.
 
 ## ⚙︎ 기술 스택 (Tech Stack)
 
-- **Core:** React 18, Vite, TypeScript
-- **Styling:** Tailwind CSS
-- **Routing:** React Router v6
+- **Core:** React 19, Vite 8, TypeScript
+- **Styling:** Tailwind CSS v4 + `cn` 유틸리티 (clsx + tailwind-merge)
+- **Routing:** React Router v7
 - **State & Data Management:**
   - Zustand
   - React Query / TanStack
   - Axios
 - **Code Quality & Automation:**
-  - ESLint v10 + Prettier
+  - ESLint v10 + Prettier (+ prettier-plugin-tailwindcss)
   - Husky + lint-staged
   - GitHub Actions
   - Renovate Bot
@@ -41,7 +41,7 @@ Toss(토스)의 프론트엔드 아키텍처 레퍼런스를 참고하여 Suspen
 
 ### ◼︎ 배열 기반 라우팅 (Array-based Routing)
 
-React Router v6의 `createBrowserRouter`를 활용하여 컴포넌트 형태(JSX)가 아닌 JavaScript 객체 배열 형태로 라우팅을 관리합니다. 라우트 정의를 View와 분리하여 가독성을 높이고, 추후 Lazy Loading 및 코드 스플리팅 확장성에 유리한 구조를 채택했습니다.
+React Router v7의 `createBrowserRouter`를 활용하여 컴포넌트 형태(JSX)가 아닌 JavaScript 객체 배열 형태로 라우팅을 관리합니다. 라우트 정의를 View와 분리하여 가독성을 높이고, 추후 Lazy Loading 및 코드 스플리팅 확장성에 유리한 구조를 채택했습니다.
 
 ### ◼︎ 절대 경로 및 바렐 패턴 (Barrel Pattern)
 
@@ -51,6 +51,8 @@ React Router v6의 `createBrowserRouter`를 활용하여 컴포넌트 형태(JSX
 import { Button, Modal } from '@/components';
 ```
 
+바렐 파일은 `export *` 방식으로 통일하며, 이를 위해 컴포넌트는 named export로 작성합니다. (단, `React.lazy()`로 불러올 페이지 컴포넌트는 default export 사용)
+
 ### ◼︎ 개발자 경험(DX) 극대화: 파일 네스팅 (File Nesting)
 
 루트 디렉토리의 시각적 노이즈를 제거하기 위해 VSCode의 파일 네스팅(File Nesting) 설정을 팀 공통 환경(`.vscode/settings.json`)으로 구성했습니다. `.prettierrc`, `vite.config.ts.timestamp-*` 등의 설정 파일들을 논리적으로 그룹화하여, 핵심 코드에만 집중할 수 있는 미니멀한 작업 환경을 제공합니다.
@@ -58,7 +60,7 @@ import { Button, Modal } from '@/components';
 ### ◼︎ 인프라 자동화
 
 - **CI 파이프라인**: GitHub Actions를 통해 PR 생성 시 Lint 및 Build 테스트를 자동화하여 코드 품질을 유지합니다.
-- **의존성 관리**: Renovate 봇을 통해 정기적으로 패키지 업데이트를 감지하고 통합 관리합니다.
+- **의존성 관리**: Renovate 봇이 매주 패키지 업데이트를 감지하여 PR을 생성합니다. minor·patch 업데이트는 CI 통과 시 자동 merge되며, major 업데이트만 직접 확인합니다.
 - **CD 파이프라인 (의도적 배제)**: 특정 호스팅 플랫폼에 종속되지 않습니다. Vercel 등 모던 PaaS의 자체 배포(Auto Deployment) 시스템을 그대로 활용하거나, AWS 등 프로젝트 환경에 맞춰 자유롭게 파이프라인을 구성할 수 있습니다.
 
 ## 📁︎ 폴더 구조 (Project Structure)
@@ -73,12 +75,13 @@ src/
 ├── router/         # 라우터 설정
 ├── store/          # Zustand 전역 상태 스토어
 ├── types/          # TypeScript 타입 정의
-└── utils/          # 유틸리티 함수
+├── utils/          # 유틸리티 함수 (cn 등)
+└── index.css       # 전역 CSS & Tailwind 설정
 ```
 
 ## ▶︎ 시작 가이드 (Quick Start)
 
-> **Node.js 18+** 환경이 필요합니다.
+> **Node.js 20.19+ 또는 22.13+** 환경이 필요합니다.
 
 1. **프로젝트 스캐폴딩**
 
