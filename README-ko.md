@@ -94,17 +94,14 @@ cd [YOUR_PROJECT_NAME]
 npm install
 ```
 
-3. **환경 변수 셋업**
-
-```bash
-cp .env.development .env
-```
-
-4. **로컬 개발 서버 구동**
+3. **로컬 개발 서버 구동**
 
 ```bash
 npm run dev
 ```
+
+> 개발용 환경 변수 기본값은 `.env.development`에 포함되어 있어 별도 설정 없이 동작합니다.
+> 개인 로컬 환경에서만 사용할 값은 `.env.development.local`에 작성하세요. (git 추적 제외)
 
 ---
 
