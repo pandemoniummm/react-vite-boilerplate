@@ -3,8 +3,8 @@ import type { ReactNode, ComponentType } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import type { FallbackProps } from 'react-error-boundary';
 
-import LoadingFallback from './LoadingFallback';
-import ErrorFallback from './ErrorFallback';
+import { LoadingFallback } from './LoadingFallback';
+import { ErrorFallback } from './ErrorFallback';
 
 interface AsyncBoundaryProps {
   children: ReactNode;
@@ -13,7 +13,7 @@ interface AsyncBoundaryProps {
   rejectedFallback?: ComponentType<FallbackProps>;
 }
 
-export default function AsyncBoundary({
+export function AsyncBoundary({
   children,
   pendingFallback = <LoadingFallback />,
   rejectedFallback = ErrorFallback,
