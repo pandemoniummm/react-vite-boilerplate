@@ -1,5 +1,6 @@
 {
   "extends": ["config:best-practices"], // 글로벌 표준 의존성 관리(Dependency Management) 프리셋 확장 (npm 신규 버전 3일 대기 포함)
+  "ignorePresets": [":pinDevDependencies"], // npm 버전은 ^ 범위 유지 (실제 설치 버전은 lockfile이 고정, create-vite 기본 형식)
 
   "timezone": "Asia/Seoul", // 봇의 기준 시간대를 한국으로 설정
   "schedule": ["before 9am on monday"], // 매주 월요일 9시 전에만 묶어서 배달
@@ -10,8 +11,9 @@
   "packageRules": [
     {
       // 보일러플레이트 특성상 런타임 로직이 거의 없어 lint & build 통과로 충분히 검증됨
-      // minor, patch & 버전 고정(pin, digest) 업데이트는 CI 통과 시 봇 자동 merge (major는 직접 확인)
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      // minor, patch & 버전 고정(pin, pinDigest, digest) 업데이트는 CI 통과 시 봇 자동 merge (major는 직접 확인)
+      // GitHub Actions는 태그 탈취 방지를 위해 커밋 해시로 고정(pinDigest, best-practices 포함)
+      "matchUpdateTypes": ["minor", "patch", "pin", "pinDigest", "digest"],
       "automerge": true
     },
     {
