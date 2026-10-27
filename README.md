@@ -1,5 +1,5 @@
 <div align="center">
-  <strong>ENG</strong> | <a href="README-ko.md">KOR</a>
+  <strong>KOR</strong> | <a href="README-en.md">ENG</a>
 </div>
 
 # ❖ React + Vite Boilerplate
@@ -10,96 +10,100 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 [![CI Pipeline](https://img.shields.io/github/actions/workflow/status/pandemoniummm/react-vite-boilerplate/ci.yml?style=for-the-badge&label=CI%20Pipeline)](https://github.com/pandemoniummm/react-vite-boilerplate/actions)
 
-A production-ready frontend boilerplate powered by React 18 & Vite.
-Pre-configured with essential frontend infrastructure—including state management, network communication, routing, and a CI pipeline—optimized for stable deployment in static hosting environments.
+Vite와 React 19 기반의 프론트엔드 보일러플레이트입니다.
+상태 관리, 네트워크 통신, 라우팅 및 CI 파이프라인 등 프론트엔드 개발에 필요한 핵심 인프라가 사전 구성되어 있으며,
+정적 호스팅 환경에 안정적으로 배포할 수 있도록 최적화되어 있습니다.
 
-## ⚙︎ Tech Stack
+## ⚙︎ 기술 스택 (Tech Stack)
 
-- **Core:** React 18, Vite, TypeScript
-- **Styling:** Tailwind CSS
-- **Routing:** React Router v6
+- **Core:** React 19, Vite 8, TypeScript
+- **Styling:** Tailwind CSS v4 + `cn` 유틸리티 (clsx + tailwind-merge)
+- **Routing:** React Router v7
 - **State & Data Management:**
   - Zustand
   - React Query / TanStack
   - Axios
 - **Code Quality & Automation:**
-  - ESLint v10 + Prettier
+  - ESLint v10 + Prettier (+ prettier-plugin-tailwindcss)
   - Husky + lint-staged
   - GitHub Actions
   - Renovate Bot
 
-## ⚑ Architecture
+## ⚑ 핵심 아키텍처 설계 (Key Features)
 
-### ◼︎ Declarative Async Handling (`AsyncBoundary`)
+### ◼︎ 선언적 비동기 처리 (`AsyncBoundary`)
 
-Inspired by Toss(SLASH) frontend architecture references, implemented a custom `AsyncBoundary` component that combines React Suspense and ErrorBoundary. By declaratively delegating loading and error states outside the component layer, it eliminates complex conditional logic (if-statements) and allows developers to focus entirely on business logic and UI rendering. Furthermore, it is **custom-designed to be highly modular, allowing developers to flexibly use only the Suspense or ErrorBoundary independently** when only one specific fallback state is needed, thereby maximizing component reusability.
+Toss(토스)의 프론트엔드 아키텍처 레퍼런스를 참고하여 Suspense와 ErrorBoundary를 결합한 `AsyncBoundary` 컴포넌트를 적용했습니다. 비동기 데이터 패칭 시 발생하는 로딩과 에러 상태 처리를 컴포넌트 외부로 선언적으로 위임하여, 내부의 복잡한 분기 로직(if)을 제거하고 오직 비즈니스 로직과 UI 렌더링에만 집중할 수 있는 높은 개발 자유도를 제공합니다. 추가적으로, 요구사항에 따라 **로딩(Suspense)이나 에러(ErrorBoundary) 중 하나의 상태 처리만 필요한 경우에도 유연하게 독립적으로 사용할 수 있도록 커스텀 설계**하여 컴포넌트의 재사용성을 극대화했습니다.
 
-### ◼︎ Separation of State Concerns (Client vs Server State)
+### ◼︎ 상태 관리의 관심사 분리 (Client vs Server State)
 
-Strictly separates the concerns of client and server states to prevent single-store bloat. Global client UI state is handled lightly with `Zustand`, while server-side data fetching and caching are entirely delegated to `React Query`, establishing a predictable and highly maintainable state flow.
+클라이언트 상태와 서버 상태의 관심사를 명확하게 분리하여 단일 스토어의 비대화를 방지합니다. 클라이언트의 UI 전역 상태는 `Zustand`로 가볍게 관리하고, 서버 데이터 패칭 및 캐싱은 `React Query`에 전적으로 위임하여 예측 가능한 상태 흐름을 구축했습니다.
 
-### ◼︎ Array-based Routing
+### ◼︎ 배열 기반 라우팅 (Array-based Routing)
 
-Utilizes React Router v6's `createBrowserRouter` to manage routes as an array of JavaScript objects rather than JSX components. This strictly separates route definitions from the View layer, improving readability and providing a highly scalable structure for future Lazy Loading and code splitting.
+React Router v7의 `createBrowserRouter`를 활용하여 컴포넌트 형태(JSX)가 아닌 JavaScript 객체 배열 형태로 라우팅을 관리합니다. 라우트 정의를 View와 분리하여 가독성을 높이고, 추후 Lazy Loading 및 코드 스플리팅 확장성에 유리한 구조를 채택했습니다.
 
-### ◼︎ Absolute Imports & Barrel Pattern
+### ◼︎ 절대 경로 및 바렐 패턴 (Barrel Pattern)
 
-Configured absolute paths (`@/`) and the Barrel Pattern (`index.ts`) to maintain consistent and concise module import paths.
+절대 경로(`@/`) 설정과 바렐 패턴(`index.ts`)을 적용하여 모듈 임포트 경로를 일관성 있고 간결하게 유지합니다.
 
 ```tsx
 import { Button, Modal } from '@/components';
 ```
 
-### ◼︎ Maximized Developer Experience (DX): File Nesting
+바렐 파일은 `export *` 방식으로 통일하며, 이를 위해 컴포넌트는 named export로 작성합니다. (단, `React.lazy()`로 불러올 페이지 컴포넌트는 default export 사용)
 
-Applied VSCode's file nesting via `.vscode/settings.json` to logically group configuration files (e.g., `.prettierrc`, `vite.config.ts.timestamp-*`). This eliminates visual noise in the project root, providing a shared and minimalist workspace that keeps developers focused entirely on the core codebase.
+### ◼︎ 개발자 경험(DX) 극대화: 파일 네스팅 (File Nesting)
 
-### ◼︎ Automated Infrastructure
+루트 디렉토리의 시각적 노이즈를 제거하기 위해 VSCode의 파일 네스팅(File Nesting) 설정을 팀 공통 환경(`.vscode/settings.json`)으로 구성했습니다. `.prettierrc`, `vite.config.ts.timestamp-*` 등의 설정 파일들을 논리적으로 그룹화하여, 핵심 코드에만 집중할 수 있는 미니멀한 작업 환경을 제공합니다.
 
-- **CI Pipeline**: Automates Lint and Build tests via GitHub Actions upon PR creation to maintain code quality.
-- **Dependency Management**: Integrates Renovate bot for scheduled detection and unified management of package updates.
-- **CD Pipeline (Intentionally Omitted)**: Not tied to any specific hosting platform. You can natively leverage the Auto Deployment systems of modern PaaS like Vercel, or freely configure a custom pipeline tailored to your project environment, such as AWS.
+### ◼︎ 인프라 자동화
 
-## 📁︎ Project Structure
+- **CI 파이프라인**: GitHub Actions를 통해 PR 생성 시 Lint 및 Build 테스트를 자동화하여 코드 품질을 유지합니다.
+- **의존성 관리**: Renovate 봇이 매주 패키지 업데이트를 감지하여 PR을 생성합니다. minor·patch 업데이트는 CI 통과 시 자동 merge되며, major 업데이트만 직접 확인합니다.
+- **CD 파이프라인 (의도적 배제)**: 특정 호스팅 플랫폼에 종속되지 않습니다. Vercel 등 모던 PaaS의 자체 배포(Auto Deployment) 시스템을 그대로 활용하거나, AWS 등 프로젝트 환경에 맞춰 자유롭게 파이프라인을 구성할 수 있습니다.
+
+## 📁︎ 폴더 구조 (Project Structure)
 
 ```text
 src/
-├── api/            # Axios instance & interceptors
-├── components/     # Shared UI components & AsyncBoundary
-├── constants/      # Global constants & ENUM data
-├── hooks/          # Custom React hooks
-├── pages/          # Page-level components
-├── router/         # Router configuration
-├── store/          # Zustand global state store
-├── types/          # TypeScript type definitions
-└── utils/          # Utility functions
+├── api/            # Axios 인스턴스 & 인터셉터
+├── components/     # 공통 UI 컴포넌트 & AsyncBoundary
+├── constants/      # 전역 상수 & ENUM 데이터
+├── hooks/          # 커스텀 훅 (React Hooks)
+├── pages/          # 페이지 컴포넌트
+├── router/         # 라우터 설정
+├── store/          # Zustand 전역 상태 스토어
+├── types/          # TypeScript 타입 정의
+├── utils/          # 유틸리티 함수 (cn 등)
+└── index.css       # 전역 CSS & Tailwind 설정
 ```
 
-## ▶︎ Quick Start
+## ▶︎ 시작 가이드 (Quick Start)
 
-> Requires **Node.js 18+**
+> **Node.js 20.19+ 또는 22.13+** 환경이 필요합니다.
 
-1. **Scaffold project**
+1. **프로젝트 스캐폴딩**
 
 ```bash
 npx degit https://github.com/pandemoniummm/react-vite-boilerplate.git [YOUR_PROJECT_NAME]
 cd [YOUR_PROJECT_NAME]
 ```
 
-2. **Install dependencies**
+2. **의존성 패키지 설치**
 
 ```bash
 npm install
 ```
 
-3. **Start local dev server**
+3. **로컬 개발 서버 구동**
 
 ```bash
 npm run dev
 ```
 
-> Default development env variables are included in `.env.development`, so no extra setup is required.
-> Put values for your local environment only in `.env.development.local`. (ignored by git)
+> 개발용 환경 변수 기본값은 `.env.development`에 포함되어 있어 별도 설정 없이 동작합니다.
+> 개인 로컬 환경에서만 사용할 값은 `.env.development.local`에 작성하세요. (git 추적 제외)
 
 ---
 
