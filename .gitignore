@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# 환경 변수 (개발용 기본값인 .env.development만 공유)
+.env
+
 # Editor directories and files
 .vscode/*
 # 동일한 DX 및 formatting 환경 유지를 위한 필수 설정 파일 공유

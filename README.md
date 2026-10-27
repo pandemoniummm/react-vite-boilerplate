@@ -93,17 +93,14 @@ cd [YOUR_PROJECT_NAME]
 npm install
 ```
 
-3. **Setup env variables**
-
-```bash
-cp .env.development .env
-```
-
-4. **Start local dev server**
+3. **Start local dev server**
 
 ```bash
 npm run dev
 ```
+
+> Default development env variables are included in `.env.development`, so no extra setup is required.
+> Put values for your local environment only in `.env.development.local`. (ignored by git)
 
 ---
 
